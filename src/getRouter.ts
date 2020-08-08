@@ -8,10 +8,10 @@ export type InternalRouter = SingletonRouter & {
 };
 
 function getRouter(registry: Registry, Router = null) {
-  const _Router = Router || NextRouter;
+  const _Router: any = Router || NextRouter;
   const _InternalRouter: InternalRouter = _Router;
   const wrap = (method: string) => (route: any, params?: any, options?: any) => {
-    const _method: any = Router![method];
+    const _method: any = _Router[method];
     if (!!_method) {
       const {
         byName,
