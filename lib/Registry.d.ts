@@ -5,6 +5,12 @@ export declare class Registry {
     get routes(): Route[];
     constructor();
     createOption(name: string | any, pattern?: string, page?: string): any;
+    /**
+     *
+     * @param name
+     * @param pattern
+     * @param page
+     */
     add(name: DynamicRouteProps | string, pattern?: string, page?: string): this;
     /**
      *

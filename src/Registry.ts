@@ -29,8 +29,14 @@ export class Registry {
     return options;
   }
 
+  /**
+   * 
+   * @param name 
+   * @param pattern 
+   * @param page 
+   */
   public add(name: DynamicRouteProps | string, pattern?: string, page?: string) {
-    const options = this.createOption(name, pattern, page);
+    const options: DynamicRouteProps = name instanceof Object ? name : this.createOption(name, pattern, page);
 
     if (this.findByName(options.name)) {
       throw new Error(`Route "${options.name}" already exists`);
@@ -47,7 +53,7 @@ export class Registry {
    * @param page 
    */
   public set(name: DynamicRouteProps | string, pattern?: string, page?: string) {
-    const options = this.createOption(name, pattern, page);
+    const options: DynamicRouteProps = name instanceof Object ? name : this.createOption(name, pattern, page);
 
     const curRoute = this.findByName(options.name);
     if (!!curRoute) {
