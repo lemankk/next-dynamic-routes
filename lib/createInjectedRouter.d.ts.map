@@ -1,0 +1,1 @@
+{"version":3,"file":"createInjectedRouter.d.ts","sourceRoot":"","sources":["src/createInjectedRouter.ts"],"names":[],"mappings":"AAAA,OAA2B,EAAE,eAAe,EAAE,MAAM,aAAa,CAAC;AAClE,OAAO,QAAQ,MAAM,YAAY,CAAC;AAClC,OAAO,EAAE,cAAc,EAAE,MAAM,SAAS,CAAC;AAEzC,iBAAS,oBAAoB,CAAC,QAAQ,EAAE,QAAQ,EAAE,MAAM,GAAE,eAAe,GAAG,GAAU,kBAoBrF;AAED,eAAe,oBAAoB,CAAC"}

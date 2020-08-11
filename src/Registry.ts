@@ -1,15 +1,19 @@
 import { parse } from "url";
 import Route from "./Route";
-import { RouteOption } from "./types";
+import { DynamicRouteProps } from "./types";
 
 export class Registry {
-  public routes: Route[] = [];
+  private _routes: Route[] = [];
 
-  constructor() {
-    this.routes = [];
+  public get routes(): Route[] {
+    return this._routes;
   }
 
-  createOption(name: string | Object, pattern?: string, page?: string) {
+  constructor() {
+    this._routes = [];
+  }
+
+  public createOption(name: string | any, pattern?: string, page?: string) {
     let options: any = {};
     let _name: any = name;
     if (name instanceof Object) {
@@ -25,38 +29,48 @@ export class Registry {
     return options;
   }
 
-  add(options: RouteOption) {
+  public add(name: DynamicRouteProps | string, pattern?: string, page?: string) {
+    const options = this.createOption(name, pattern, page);
+
     if (this.findByName(options.name)) {
       throw new Error(`Route "${options.name}" already exists`);
     }
 
-    this.routes.push(new Route(options));
+    this._routes.push(new Route(options));
     return this;
   }
 
-  set(options: RouteOption) {
+  /**
+   * 
+   * @param name 
+   * @param pattern 
+   * @param page 
+   */
+  public set(name: DynamicRouteProps | string, pattern?: string, page?: string) {
+    const options = this.createOption(name, pattern, page);
+
     const curRoute = this.findByName(options.name);
     if (!!curRoute) {
       if (options.pattern) curRoute.updatePattern(options.pattern);
       if (options.page) curRoute.updatePage(options.page);
     } else {
-      this.routes.push(new Route(options));
+      this._routes.push(new Route(options));
     }
     return this;
   }
 
-  findByName(name: string): Route | null {
+  public findByName(name: string): Route | null {
     if (name) {
-      return this.routes.filter((route) => route.name === name)[0];
+      return this._routes.filter((route) => route.name === name)[0];
     }
     return null
   }
 
-  match(url: string) {
+  public match(url: string) {
     const parsedUrl = parse(url, true);
     const { pathname, query } = parsedUrl;
 
-    return this.routes.reduce(
+    return this._routes.reduce(
       (result: any, route: any) => {
         if (result.route) return result;
         const params = route.match(pathname);
@@ -67,7 +81,7 @@ export class Registry {
     );
   }
 
-  findAndGetUrls(nameOrUrl: string, params = {}) {
+  public findAndGetUrls(nameOrUrl: string, params = {}) {
     const route = this.findByName(nameOrUrl);
 
     if (route) {
@@ -76,11 +90,17 @@ export class Registry {
       const { route, query } = this.match(nameOrUrl);
       const href = route ? route.getHref(query) : nameOrUrl;
       const urls = { href, as: nameOrUrl };
-      return { route, urls };
+      return { route, urls, byName: false };
     }
   }
 
-  getRequestHandler(app: any, customHandler: any = null) {
+  /**
+   * Provide the handler for server-side
+   * for the path request (IncomingMessage) handling
+   * @param app 
+   * @param customHandler 
+   */
+  public getRequestHandler(app: any, customHandler: any = null) {
     const nextHandler = app.getRequestHandler();
 
     return (req: any, res: any) => {

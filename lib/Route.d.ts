@@ -1,4 +1,4 @@
-import { RouteOption } from "./types";
+import { DynamicRouteProps } from "./types";
 export declare class Route {
     name: string;
     pattern: string;
@@ -7,7 +7,7 @@ export declare class Route {
     keyNames: string[];
     toPath: any;
     keys: any[];
-    constructor(options: RouteOption);
+    constructor(options: DynamicRouteProps);
     updatePattern(pattern: string): void;
     updatePage(page?: string): void;
     match(path: string): any;

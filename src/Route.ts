@@ -1,6 +1,6 @@
 import { pathToRegexp, compile } from "path-to-regexp";
 import { toQuerystring } from "./utils";
-import { RouteOption } from "./types";
+import { DynamicRouteProps } from "./types";
 
 export class Route {
   public name!: string;
@@ -11,7 +11,7 @@ export class Route {
   public toPath!: any;
   public keys!: any[];
 
-  constructor(options: RouteOption) {
+  constructor(options: DynamicRouteProps) {
     const { name, pattern, page = name } = options;
     if (!name && !page) {
       throw new Error(`Missing page to render for route "${pattern}"`);
