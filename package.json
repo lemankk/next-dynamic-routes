@@ -1,6 +1,6 @@
 {
-    "name": "next-dynamic-routes",
-    "description": "An extension of provide dynamic routes to next.js ecosystem.",
+    "name": "next-routes-dynamic",
+    "description": "An extension of provide modification to the registered routes for next.js ecosystem.",
     "version": "0.2.0",
     "license": "MIT",
     "author": {
