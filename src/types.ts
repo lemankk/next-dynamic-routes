@@ -2,7 +2,7 @@ import React from "react";
 import { SingletonRouter } from "next/router";
 import { LinkProps as OriginalLinkProps } from "next/link";
 
-export type NextLinkElementType = React.ElementType<OriginalLinkProps>;
+export type NextLinkElementType = React.SFC<OriginalLinkProps>;
 
 export type CreateRegistryOptions = {
   Link?: NextLinkElementType,
