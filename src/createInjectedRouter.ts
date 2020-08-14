@@ -17,7 +17,7 @@ function createInjectedRouter(registry: Registry, Router: SingletonRouter | any 
       return _method(href, as, byName ? options : params);
     }
   };
-
+  
   _injectingRouter.pushRoute = wrap("push");
   _injectingRouter.replaceRoute = wrap("replace");
   _injectingRouter.prefetchRoute = wrap("prefetch");

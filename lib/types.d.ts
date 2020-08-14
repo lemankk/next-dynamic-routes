@@ -14,7 +14,7 @@ export declare type DynamicRouteProps = {
     pattern?: string;
     page?: string;
 };
-export declare type DynamicRouteLinkProps = OriginalLinkProps & {
+export declare type DynamicRouteLinkProps = NextLinkElementType & {
     route?: string;
     to?: string;
     params?: any;

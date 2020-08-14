@@ -114,9 +114,9 @@ export class Registry {
 
       if (route) {
         if (!!customHandler) {
-          customHandler({ req, res, route, query });
+          customHandler({ req, res, route, query, parsedUrl });
         } else {
-          app.render(req, res, route.page, query);
+          app.render(req, res, route.page, query, parsedUrl);
         }
       } else {
         nextHandler(req, res, parsedUrl);

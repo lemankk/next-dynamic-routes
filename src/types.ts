@@ -19,7 +19,7 @@ export type DynamicRouteProps = {
   page?: string;
 };
 
-export type DynamicRouteLinkProps = OriginalLinkProps & {
+export type DynamicRouteLinkProps = NextLinkElementType & {
   route?: string,
   to?: string,
   params?: any,
