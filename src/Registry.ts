@@ -2,6 +2,13 @@ import { parse } from "url";
 import Route from "./Route";
 import { DynamicRouteProps } from "./types";
 
+export type RequestHandlerQueryCallbackParams = {
+  route: Route,
+  query: any,
+  req: any,
+}
+export type RequestHandlerQueryCallback = (params: RequestHandlerQueryCallbackParams) => any;
+
 export class Registry {
   private _routes: Route[] = [];
 
@@ -109,17 +116,17 @@ export class Registry {
   public getRequestHandler(app: any, customHandler: any = null) {
     const nextHandler = app.getRequestHandler();
 
-    return (req: any, res: any) => {
+    return (req: any, res: any, queryHandler: RequestHandlerQueryCallback | null = null) => {
       const { route, query, parsedUrl } = this.match(req.url);
 
       if (route) {
         if (!!customHandler) {
-          customHandler({ req, res, route, query, parsedUrl });
+          customHandler({ req, res, route, query: queryHandler ? queryHandler({req, query, route}) : query, parsedUrl });
         } else {
-          app.render(req, res, route.page, query, parsedUrl);
+          app.render(req, res, route.page, queryHandler ? queryHandler({req, query, route}) : query, parsedUrl);
         }
       } else {
-        nextHandler(req, res, parsedUrl);
+        nextHandler(req, res, queryHandler ? queryHandler({req, query, route}) : query, parsedUrl);
       }
     };
   }

@@ -1,5 +1,11 @@
 import Route from "./Route";
 import { DynamicRouteProps } from "./types";
+export declare type RequestHandlerQueryCallbackParams = {
+    route: Route;
+    query: any;
+    req: any;
+};
+export declare type RequestHandlerQueryCallback = (params: RequestHandlerQueryCallbackParams) => any;
 export declare class Registry {
     private _routes;
     get routes(): Route[];
@@ -42,7 +48,7 @@ export declare class Registry {
      * @param app
      * @param customHandler
      */
-    getRequestHandler(app: any, customHandler?: any): (req: any, res: any) => void;
+    getRequestHandler(app: any, customHandler?: any): (req: any, res: any, queryHandler?: RequestHandlerQueryCallback | null) => void;
 }
 export default Registry;
 //# sourceMappingURL=Registry.d.ts.map

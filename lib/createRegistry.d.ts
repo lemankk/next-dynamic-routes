@@ -3,7 +3,12 @@ import Registry from "./Registry";
 import { CreateRegistryOptions } from "./types";
 export declare const createRegistry: (options?: CreateRegistryOptions | undefined) => {
     registry: Registry;
-    Link: import("react").MemoExoticComponent<(props: import("./types").DynamicRouteLinkProps) => import("react").ReactElement<import("next/link").LinkProps, string | ((props: any) => import("react").ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)>>;
+    Link: (props: import("./types").DynamicRouteLinkProps) => import("react").FunctionComponentElement<{
+        propTypes?: import("react").WeakValidationMap<import("next/link").LinkProps> | undefined;
+        contextTypes?: import("prop-types").ValidationMap<any> | undefined;
+        defaultProps?: Partial<import("next/link").LinkProps> | undefined;
+        displayName?: string | undefined;
+    }>;
     Router: import("./types").InjectedRouter;
 };
 export default createRegistry;

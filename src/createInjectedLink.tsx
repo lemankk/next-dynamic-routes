@@ -5,8 +5,8 @@ import { DynamicRouteLinkProps, NextLinkElementType } from "./types";
 
 
 function createInjectedLink(registry: Registry, Link: NextLinkElementType | null = null) {
-  let _Link = Link || OriginalNextLink;
-  const DynamicRouteLink = React.memo((props: DynamicRouteLinkProps) => {
+  const LinkRenderer: any = Link || OriginalNextLink;
+  const DynamicRouteLink = (props: DynamicRouteLinkProps) => {
     const { route, params, to, ...newProps } = props;
     const nameOrUrl = route || to;
 
@@ -14,8 +14,8 @@ function createInjectedLink(registry: Registry, Link: NextLinkElementType | null
       Object.assign(newProps, registry.findAndGetUrls(nameOrUrl, params).urls);
     }
 
-    return React.createElement(_Link, newProps);
-  });
+    return React.createElement(LinkRenderer, newProps);
+  };
   return DynamicRouteLink;
 }
 
