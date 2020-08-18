@@ -1,7 +1,7 @@
 {
     "name": "next-routes-dynamic",
     "description": "An extension of provide modification to the registered routes for next.js ecosystem.",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "license": "MIT",
     "author": {
         "name": "Leman",
@@ -29,7 +29,7 @@
         "build": "npm-run-all clean compile"
     },
     "peerDependencies": {
-        "next": "^9.0.9",
+        "next": "^9.5.2",
         "react": "^16.9.0"
     },
     "dependencies": {

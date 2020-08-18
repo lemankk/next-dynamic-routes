@@ -1,5 +1,5 @@
 import React from "react";
-import OriginalNextLink from "next/link";
+import OriginalNextLink, { LinkProps } from "next/link";
 import Registry from "./Registry";
 import { DynamicRouteLinkProps, NextLinkElementType } from "./types";
 
@@ -10,11 +10,12 @@ function createInjectedLink(registry: Registry, Link: NextLinkElementType | null
     const { route, params, to, ...newProps } = props;
     const nameOrUrl = route || to;
 
+    // Try to provide asPath, query to next/link after mapped from RouteRegistry
     if (nameOrUrl) {
       Object.assign(newProps, registry.findAndGetUrls(nameOrUrl, params).urls);
     }
 
-    return React.createElement(LinkRenderer, newProps);
+    return <LinkRenderer {...newProps} />;
   };
   return DynamicRouteLink;
 }
