@@ -1,15 +1,13 @@
 import { parse } from "url";
 import Route from "./Route";
-import { DynamicRouteProps } from "./types";
+import {
+  DynamicRouteProps,
+  DynamicRouteMatchResult,
+  DynamicRegistry,
+  RequestHandlerQueryCallback,
+} from "./types";
 
-export type RequestHandlerQueryCallbackParams = {
-  route: Route,
-  query: any,
-  req: any,
-}
-export type RequestHandlerQueryCallback = (params: RequestHandlerQueryCallbackParams) => any;
-
-export class Registry {
+export class Registry implements DynamicRegistry {
   private _routes: Route[] = [];
 
   public get routes(): Route[] {
@@ -37,13 +35,18 @@ export class Registry {
   }
 
   /**
-   * 
-   * @param name 
-   * @param pattern 
-   * @param page 
+   *
+   * @param name
+   * @param pattern
+   * @param page
    */
-  public add(name: DynamicRouteProps | string, pattern?: string, page?: string) {
-    const options: DynamicRouteProps = name instanceof Object ? name : this.createOption(name, pattern, page);
+  public add(
+    name: DynamicRouteProps | string,
+    pattern?: string,
+    page?: string
+  ) {
+    const options: DynamicRouteProps =
+      name instanceof Object ? name : this.createOption(name, pattern, page);
 
     if (this.findByName(options.name)) {
       throw new Error(`Route "${options.name}" already exists`);
@@ -54,13 +57,18 @@ export class Registry {
   }
 
   /**
-   * 
-   * @param name 
-   * @param pattern 
-   * @param page 
+   *
+   * @param name
+   * @param pattern
+   * @param page
    */
-  public set(name: DynamicRouteProps | string, pattern?: string, page?: string) {
-    const options: DynamicRouteProps = name instanceof Object ? name : this.createOption(name, pattern, page);
+  public set(
+    name: DynamicRouteProps | string,
+    pattern?: string,
+    page?: string
+  ) {
+    const options: DynamicRouteProps =
+      name instanceof Object ? name : this.createOption(name, pattern, page);
 
     const curRoute = this.findByName(options.name);
     if (!!curRoute) {
@@ -76,7 +84,7 @@ export class Registry {
     if (name) {
       return this._routes.filter((route) => route.name === name)[0];
     }
-    return null
+    return null;
   }
 
   public match(url: string) {
@@ -94,7 +102,10 @@ export class Registry {
     );
   }
 
-  public findAndGetUrls(nameOrUrl: string, params = {}) {
+  public findAndGetUrls(
+    nameOrUrl: string,
+    params = {}
+  ): DynamicRouteMatchResult {
     const route = this.findByName(nameOrUrl);
 
     if (route) {
@@ -110,23 +121,44 @@ export class Registry {
   /**
    * Provide the handler for server-side
    * for the path request (IncomingMessage) handling
-   * @param app 
-   * @param customHandler 
+   * @param app
+   * @param customHandler
    */
   public getRequestHandler(app: any, customHandler: any = null) {
     const nextHandler = app.getRequestHandler();
 
-    return (req: any, res: any, queryHandler: RequestHandlerQueryCallback | null = null) => {
+    return (
+      req: any,
+      res: any,
+      queryHandler: RequestHandlerQueryCallback | null = null
+    ) => {
       const { route, query, parsedUrl } = this.match(req.url);
 
       if (route) {
         if (!!customHandler) {
-          customHandler({ req, res, route, query: queryHandler ? queryHandler({req, query, route}) : query, parsedUrl });
+          customHandler({
+            req,
+            res,
+            route,
+            query: queryHandler ? queryHandler({ req, query, route }) : query,
+            parsedUrl,
+          });
         } else {
-          app.render(req, res, route.page, queryHandler ? queryHandler({req, query, route}) : query, parsedUrl);
+          app.render(
+            req,
+            res,
+            route.page,
+            queryHandler ? queryHandler({ req, query, route }) : query,
+            parsedUrl
+          );
         }
       } else {
-        nextHandler(req, res, queryHandler ? queryHandler({req, query, route}) : query, parsedUrl);
+        nextHandler(
+          req,
+          res,
+          queryHandler ? queryHandler({ req, query, route }) : query,
+          parsedUrl
+        );
       }
     };
   }

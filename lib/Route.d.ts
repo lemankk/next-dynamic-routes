@@ -1,5 +1,5 @@
-import { DynamicRouteProps } from "./types";
-export declare class Route {
+import { DynamicRouteProps, DynamicRoute } from "./types";
+export declare class Route implements DynamicRoute {
     name: string;
     pattern: string;
     page: string;

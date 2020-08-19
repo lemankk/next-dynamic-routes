@@ -1,12 +1,6 @@
 import Route from "./Route";
-import { DynamicRouteProps } from "./types";
-export declare type RequestHandlerQueryCallbackParams = {
-    route: Route;
-    query: any;
-    req: any;
-};
-export declare type RequestHandlerQueryCallback = (params: RequestHandlerQueryCallbackParams) => any;
-export declare class Registry {
+import { DynamicRouteProps, DynamicRouteMatchResult, DynamicRegistry, RequestHandlerQueryCallback } from "./types";
+export declare class Registry implements DynamicRegistry {
     private _routes;
     get routes(): Route[];
     constructor();
@@ -27,21 +21,7 @@ export declare class Registry {
     set(name: DynamicRouteProps | string, pattern?: string, page?: string): this;
     findByName(name: string): Route | null;
     match(url: string): any;
-    findAndGetUrls(nameOrUrl: string, params?: {}): {
-        route: Route;
-        urls: {
-            as: any;
-            href: string;
-        };
-        byName: boolean;
-    } | {
-        route: any;
-        urls: {
-            href: any;
-            as: string;
-        };
-        byName: boolean;
-    };
+    findAndGetUrls(nameOrUrl: string, params?: {}): DynamicRouteMatchResult;
     /**
      * Provide the handler for server-side
      * for the path request (IncomingMessage) handling

@@ -1,8 +1,8 @@
 import { pathToRegexp, compile } from "path-to-regexp";
 import { toQuerystring } from "./utils";
-import { DynamicRouteProps } from "./types";
+import { DynamicRouteProps, DynamicRoute } from "./types";
 
-export class Route {
+export class Route  implements DynamicRoute{
   public name!: string;
   public pattern!: string;
   public page!: string;
