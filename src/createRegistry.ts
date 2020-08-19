@@ -1,6 +1,7 @@
 import Registry from "./Registry";
 import createInjectedLink from "./createInjectedLink";
 import createInjectedRouter from "./createInjectedRouter";
+import createUseRouteRegistry from "./createUseRouteRegistry";
 import { CreateRegistryOptions } from "./types";
 
 export const createRegistry = (options?: CreateRegistryOptions) => {
@@ -10,6 +11,7 @@ export const createRegistry = (options?: CreateRegistryOptions) => {
         registry,
         Link: createInjectedLink(registry, Link),
         Router: createInjectedRouter(registry, Router),
+        useRouteRegistry: createUseRouteRegistry(registry),
     }
 };
 
