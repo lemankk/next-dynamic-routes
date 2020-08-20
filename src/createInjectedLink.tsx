@@ -10,12 +10,19 @@ function createInjectedLink(registry: Registry, Link: NextLinkElementType | null
     const { route, params, to, ...newProps } = props;
     const nameOrUrl = route || to;
 
+    let _newProps: any = newProps;
     // Try to provide asPath, query to next/link after mapped from RouteRegistry
     if (nameOrUrl) {
-      Object.assign(newProps, registry.findAndGetUrls(nameOrUrl, params).urls);
+      Object.assign(_newProps, registry.findAndGetUrls(nameOrUrl, params).urls);
+    }
+    if (!_newProps.href) {
+      _newProps.href = nameOrUrl;
+    }
+    if (!_newProps.params) {
+      _newProps.params = params;
     }
 
-    return <LinkRenderer {...newProps} />;
+    return <LinkRenderer {..._newProps} />;
   };
   return DynamicRouteLink;
 }

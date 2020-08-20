@@ -78,6 +78,7 @@ export declare type DynamicRouteProps = {
 };
 export declare type DynamicRouteLinkProps = PropsWithChildren<{
     route: string;
+    href?: string;
     to?: string;
     params?: any;
 }>;
