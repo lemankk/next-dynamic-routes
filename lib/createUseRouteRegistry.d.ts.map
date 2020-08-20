@@ -1,1 +1,1 @@
-{"version":3,"file":"createUseRouteRegistry.d.ts","sourceRoot":"","sources":["src/createUseRouteRegistry.ts"],"names":[],"mappings":"AACA,OAAO,QAAQ,MAAM,YAAY,CAAC;AAClC,OAAO,EAA2B,6BAA6B,EAAE,MAAM,SAAS,CAAC;AAEjF,QAAA,MAAM,sBAAsB,aAAc,QAAQ,KAAG,6BAQpD,CAAA;AAED,eAAe,sBAAsB,CAAC"}
+{"version":3,"file":"createUseRouteRegistry.d.ts","sourceRoot":"","sources":["src/createUseRouteRegistry.ts"],"names":[],"mappings":"AACA,OAAO,QAAQ,MAAM,YAAY,CAAC;AAClC,OAAO,EAA4B,6BAA6B,EAAE,MAAM,SAAS,CAAC;AAElF,QAAA,MAAM,sBAAsB,aAAc,QAAQ,KAAG,6BAQpD,CAAA;AAED,eAAe,sBAAsB,CAAC"}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { SingletonRouter } from "next/router";
 import { LinkProps as OriginalLinkProps } from "next/link";
 
@@ -96,11 +96,11 @@ export type DynamicRouteProps = {
   page?: string;
 };
 
-export type DynamicRouteLinkProps = NextLinkElementType & {
-  route?: string;
+export type DynamicRouteLinkProps = PropsWithChildren<OriginalLinkProps & {
+  route: string;
   to?: string;
   params?: any;
-};
+}>;
 
 export type LinkProps = OriginalLinkProps;
 

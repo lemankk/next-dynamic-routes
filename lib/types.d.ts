@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { SingletonRouter } from "next/router";
 import { LinkProps as OriginalLinkProps } from "next/link";
 export interface DynamicRoute {
@@ -75,11 +75,11 @@ export declare type DynamicRouteProps = {
     pattern?: string;
     page?: string;
 };
-export declare type DynamicRouteLinkProps = NextLinkElementType & {
-    route?: string;
+export declare type DynamicRouteLinkProps = PropsWithChildren<OriginalLinkProps & {
+    route: string;
     to?: string;
     params?: any;
-};
+}>;
 export declare type LinkProps = OriginalLinkProps;
 export declare type InjectedRouter = SingletonRouter & {
     pushRoute?: (route: string, params?: DynamicRouteParams, options?: any) => void;
