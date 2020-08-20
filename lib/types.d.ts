@@ -53,7 +53,8 @@ export interface DynamicRegistry {
      */
     getRequestHandler(app: any, customHandler?: any): (req: any, res: any, queryHandler?: RequestHandlerQueryCallback | null) => void;
 }
-export declare type NextLinkElementType = React.SFC<OriginalLinkProps>;
+export declare type LinkProps = Exclude<OriginalLinkProps, "href">;
+export declare type NextLinkElementType = React.SFC<LinkProps>;
 export declare type DynamicRouteMatchUrlsResult = {
     as: any;
     href: string;
@@ -75,12 +76,11 @@ export declare type DynamicRouteProps = {
     pattern?: string;
     page?: string;
 };
-export declare type DynamicRouteLinkProps = PropsWithChildren<OriginalLinkProps & {
+export declare type DynamicRouteLinkProps = PropsWithChildren<{
     route: string;
     to?: string;
     params?: any;
 }>;
-export declare type LinkProps = OriginalLinkProps;
 export declare type InjectedRouter = SingletonRouter & {
     pushRoute?: (route: string, params?: DynamicRouteParams, options?: any) => void;
     replaceRoute?: (route: string, params?: DynamicRouteParams, options?: any) => void;

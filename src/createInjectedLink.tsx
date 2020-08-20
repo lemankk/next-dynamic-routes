@@ -1,5 +1,5 @@
 import React from "react";
-import OriginalNextLink, { LinkProps } from "next/link";
+import OriginalNextLink from "next/link";
 import Registry from "./Registry";
 import { DynamicRouteLinkProps, NextLinkElementType } from "./types";
 
