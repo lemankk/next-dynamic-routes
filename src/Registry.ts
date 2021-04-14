@@ -156,7 +156,6 @@ export class Registry implements DynamicRegistry {
         nextHandler(
           req,
           res,
-          queryHandler ? queryHandler({ req, query, route }) : query,
           parsedUrl
         );
       }
