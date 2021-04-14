@@ -6,9 +6,12 @@ import {
   DynamicRegistry,
   RequestHandlerQueryCallback,
 } from "./types";
+import { EVENT_CHANGE } from "./constants";
 
 export class Registry implements DynamicRegistry {
   private _routes: Route[] = [];
+
+  private _callbacks: Record<string, Function[]> = {};
 
   public get routes(): Route[] {
     return this._routes;
@@ -16,6 +19,40 @@ export class Registry implements DynamicRegistry {
 
   constructor() {
     this._routes = [];
+  }
+
+  /**
+   * Listen to event change from registry
+   * @param event
+   * @param cb
+   * @returns
+   */
+  public on(event: string, cb: Function) {
+    if (!this._callbacks[event]) this._callbacks[event] = [];
+    this._callbacks[event].push(cb);
+
+    return () => {
+      this.off(event, cb);
+    };
+  }
+
+  /**
+   * Remove listener from registry
+   * @param event
+   * @param cb
+   */
+  public off(event: string, cb: Function) {
+    const index = this._callbacks[event].findIndex((target) => target === cb);
+    if (index >= 0) {
+      this._callbacks[event] = this._callbacks[event].splice(index, 1);
+    }
+  }
+
+  public emit(event: string, ...rest: any[]) {
+    const cbs = this._callbacks[event];
+    if (cbs) {
+      cbs.forEach((cb) => cb.call(null, rest));
+    }
   }
 
   public createOption(name: string | any, pattern?: string, page?: string) {
@@ -53,6 +90,8 @@ export class Registry implements DynamicRegistry {
     }
 
     this._routes.push(new Route(options));
+
+    this.emit(EVENT_CHANGE);
     return this;
   }
 
@@ -77,6 +116,9 @@ export class Registry implements DynamicRegistry {
     } else {
       this._routes.push(new Route(options));
     }
+
+    this.emit(EVENT_CHANGE);
+
     return this;
   }
 
@@ -153,11 +195,7 @@ export class Registry implements DynamicRegistry {
           );
         }
       } else {
-        nextHandler(
-          req,
-          res,
-          parsedUrl
-        );
+        nextHandler(req, res, parsedUrl);
       }
     };
   }

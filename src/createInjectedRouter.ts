@@ -2,7 +2,7 @@ import OriginalNextRouter, { SingletonRouter } from "next/router";
 import Registry from "./Registry";
 import { InjectedRouter } from "./types";
 
-function createInjectedRouter(registry: Registry, Router: SingletonRouter | any = null) {
+export function createInjectedRouter(registry: Registry, Router: SingletonRouter | any = null) {
   const _router: any = Router || OriginalNextRouter;
   const _injectingRouter: InjectedRouter = {
     ..._router,
@@ -23,5 +23,3 @@ function createInjectedRouter(registry: Registry, Router: SingletonRouter | any 
   _injectingRouter.prefetchRoute = wrap("prefetch");
   return _injectingRouter;
 }
-
-export default createInjectedRouter;

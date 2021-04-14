@@ -10,3 +10,6 @@ yarn-debug.log*
 yarn-error.log*
 
 *.tgz
+
+*.bak
+*.log

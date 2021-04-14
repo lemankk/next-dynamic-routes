@@ -76,7 +76,7 @@ export type DynamicRouteMatchUrlsResult = {
   href: string;
 };
 export type DynamicRouteMatchResult = {
-  route: DynamicRoute;
+  route: DynamicRoute | null;
   urls: DynamicRouteMatchUrlsResult;
   byName: boolean;
 };

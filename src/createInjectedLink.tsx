@@ -2,18 +2,23 @@ import React from "react";
 import OriginalNextLink from "next/link";
 import Registry from "./Registry";
 import { DynamicRouteLinkProps, NextLinkElementType } from "./types";
+import { useDynamicRouteMatch } from "./useDynamicRouteMatch";
 
-
-function createInjectedLink(registry: Registry, Link: NextLinkElementType | null = null) {
+export function createInjectedLink(
+  registry: Registry,
+  Link: NextLinkElementType | null = null
+) {
   const LinkRenderer: any = Link || OriginalNextLink;
-  const DynamicRouteLink = (props: DynamicRouteLinkProps) => {
+  function DynamicRouteLink(props: DynamicRouteLinkProps) {
     const { route, params, to, ...newProps } = props;
     const nameOrUrl = route || to;
 
-    let _newProps: any = newProps;
     // Try to provide asPath, query to next/link after mapped from RouteRegistry
-    if (nameOrUrl) {
-      Object.assign(_newProps, registry.findAndGetUrls(nameOrUrl, params).urls);
+    const result = useDynamicRouteMatch(registry, nameOrUrl, params);
+
+    let _newProps: any = newProps;
+    if (result) {
+      Object.assign(_newProps, result.urls);
     }
     if (!_newProps.href) {
       _newProps.href = nameOrUrl;
@@ -23,8 +28,6 @@ function createInjectedLink(registry: Registry, Link: NextLinkElementType | null
     }
 
     return <LinkRenderer {..._newProps} />;
-  };
+  }
   return DynamicRouteLink;
 }
-
-export default createInjectedLink;

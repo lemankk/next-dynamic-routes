@@ -1,5 +1,4 @@
 import Registry from "./Registry";
 import { CreateUseRouteDynamicResponse } from "./types";
-declare const createUseRouteRegistry: (registry: Registry) => CreateUseRouteDynamicResponse;
-export default createUseRouteRegistry;
+export declare function createUseRouteRegistry(registry: Registry): CreateUseRouteDynamicResponse;
 //# sourceMappingURL=createUseRouteRegistry.d.ts.map

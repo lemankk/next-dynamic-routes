@@ -60,7 +60,7 @@ export declare type DynamicRouteMatchUrlsResult = {
     href: string;
 };
 export declare type DynamicRouteMatchResult = {
-    route: DynamicRoute;
+    route: DynamicRoute | null;
     urls: DynamicRouteMatchUrlsResult;
     byName: boolean;
 };

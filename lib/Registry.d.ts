@@ -2,8 +2,23 @@ import Route from "./Route";
 import { DynamicRouteProps, DynamicRouteMatchResult, DynamicRegistry, RequestHandlerQueryCallback } from "./types";
 export declare class Registry implements DynamicRegistry {
     private _routes;
+    private _callbacks;
     get routes(): Route[];
     constructor();
+    /**
+     * Listen to event change from registry
+     * @param event
+     * @param cb
+     * @returns
+     */
+    on(event: string, cb: Function): () => void;
+    /**
+     * Remove listener from registry
+     * @param event
+     * @param cb
+     */
+    off(event: string, cb: Function): void;
+    emit(event: string, ...rest: any[]): void;
     createOption(name: string | any, pattern?: string, page?: string): any;
     /**
      *
