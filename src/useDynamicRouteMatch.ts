@@ -1,10 +1,11 @@
 import React from "react";
+import isEqual from "lodash/isEqual";
 import Registry from "./Registry";
 import { DynamicRouteMatchResult } from "./types";
 import { EVENT_CHANGE } from "./constants";
 
 function createDefaultResult(): DynamicRouteMatchResult {
-  return { route: null, urls: { as: "", href: "" }, byName: false };
+  return { route: null, urls: { as: "", href: "", query: {} }, byName: false };
 }
 
 export function useDynamicRouteMatch(
@@ -23,9 +24,7 @@ export function useDynamicRouteMatch(
         ? createDefaultResult()
         : registry.findAndGetUrls(nameOrUrl, params);
       if (
-        !newResult.urls ||
-        lastUrls.as !== newResult.urls.as ||
-        lastUrls.href !== newResult.urls.href
+        !newResult.urls || !isEqual(lastUrls, newResult.urls)
       ) {
         setUrls(newResult.urls);
       }

@@ -155,7 +155,7 @@ export class Registry implements DynamicRegistry {
     } else {
       const { route, query } = this.match(nameOrUrl);
       const href = route ? route.getHref(query) : nameOrUrl;
-      const urls = { href, as: nameOrUrl };
+      const urls = { href, as: nameOrUrl, query };
       return { route, urls, byName: false };
     }
   }

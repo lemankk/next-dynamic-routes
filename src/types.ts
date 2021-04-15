@@ -74,6 +74,7 @@ export type NextLinkElementType = React.SFC<LinkProps>;
 export type DynamicRouteMatchUrlsResult = {
   as: any;
   href: string;
+  query?: Record<string, any>;
 };
 export type DynamicRouteMatchResult = {
   route: DynamicRoute | null;
